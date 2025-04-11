@@ -7,14 +7,16 @@ SRCS = $(wildcard src/*.c)
 OBJS = $(patsubst src/%.c,build/%.o,$(SRCS))
 
 # Название итогового файла и директория для бинарника
-TARGET = bin/signal_analysis
+TARGET_DIR = bin
+TARGET_NAME = signal_analysis
+TARGET = $(TARGET_DIR)/$(TARGET_NAME)
 
 # Правило по умолчанию: сборка TARGET
 all: $(TARGET)
 
 # Правило линковки для создания исполняемого файла в bin/
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET)
+$(TARGET): $(OBJS) | $(TARGET_DIR)
+	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
 
 # Компиляция исходников в объектные файлы, объектники сохраняются в build/
 build/%.o: src/%.c | build
@@ -22,10 +24,17 @@ build/%.o: src/%.c | build
 
 # Создание директории build, если её нет
 build:
-	mkdir -p build
+	@mkdir -p build
 
-# Очистка сборки: удаляем объектные файлы и исполняемый файл
+# Создание директории bin, если её нет
+$(TARGET_DIR):
+	@mkdir -p $(TARGET_DIR)
+
+# Очистка сборки: удаляем объектные файлы и исполняемый файл/папку
 clean:
-	rm -rf build $(TARGET)
+	@echo "Cleaning up..." # Добавим немного информативности
+	@rm -rf build $(TARGET_DIR) # Удаляем всю папку bin и build
+	@echo "Done."
 
-.PHONY: all clean
+# Объявляем цели, которые не являются файлами
+.PHONY: all clean build $(TARGET_DIR)
