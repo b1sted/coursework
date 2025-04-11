@@ -15,3 +15,6 @@ Thumbs.db
 # Log files or temporary data (if any)
 *.log
 tmp/
+
+# Specific data files to ignore in data/ directory
+data/array*.txt
