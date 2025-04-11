@@ -1,0 +1,17 @@
+# Build artifacts
+build/
+bin/
+*.o
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files (example)
+.vscode/
+.idea/
+*.swp
+
+# Log files or temporary data (if any)
+*.log
+tmp/
