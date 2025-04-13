@@ -4,6 +4,7 @@
 
 #include "input.h"
 #include "output.h"
+#include "file.h"
 #include "forming.h"
 #include "parameter.h"
 
@@ -55,7 +56,16 @@ int main() {
             calculate_with_precision();
             break;
         case 3:
-            output_in_file(n, t, Uvx, Uvix);
+            FILE *f1, *f2, *f3;
+
+            // Открываем файлы для записи
+            open_output_files(&f1, &f2, &f3);
+
+            // Записываем данные в файлы
+            output_in_file(f1, f2, f3, n, t, Uvx, Uvix);
+            
+            // Закрываем файлы после записи
+            close_output_files(f1, f2, f3);
             break;
         }
 
