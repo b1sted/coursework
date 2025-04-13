@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "output.h"
+
 #include "file.h"
 
 // Функция вывода заставки из файла

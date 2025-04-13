@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "file.h"
 
 // Функция для открытия файлов для последующей записи в них информации

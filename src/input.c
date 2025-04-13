@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+
 #include "input.h"
 
 #define INPUT_SIZE 10
