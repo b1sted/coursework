@@ -13,7 +13,7 @@ int input_n() {
     int result;
     
     while (1) {
-        printf("Введите целое число: ");
+        printf("\nВведите целое число: ");
         result = scanf("%d", &value);
         if (result == 1) {
             break;  // Ввод успешно прочитан

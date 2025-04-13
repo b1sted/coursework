@@ -69,6 +69,7 @@ int main() {
             break;
         }
 
+        printf("\n");
         continueProgram = ask_user_continue();
     }
     

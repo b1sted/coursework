@@ -37,7 +37,7 @@ void calculate_with_precision() {
 
     float current_parameter, t[N], Uvx[N], Uvix[N], dt;
 
-    printf("\nЗаданный параметр: расчет длительности заднего фронта для Uвых");
+    printf("\nЗаданный параметр: расчет длительности заднего фронта для Uвых\n");
 
     while (current_precision > epsilon) {
         // Формирование массивов
