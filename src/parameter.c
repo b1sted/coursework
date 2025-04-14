@@ -37,6 +37,8 @@ void calculate_with_precision() {
 
     float current_parameter, t[N], Uvx[N], Uvix[N], dt;
 
+    printf("\nЗаданный параметр: расчет длительности заднего фронта для Uвых\n");
+
     while (current_precision > epsilon) {
         // Формирование массивов
         forming_time(n, t, &dt);
@@ -54,7 +56,7 @@ void calculate_with_precision() {
             current_precision = fabs(prev_parameter - current_parameter) / current_parameter;
         }
 
-        printf("n = %d, параметр = %f, погрешность = %f\n", n, current_parameter, current_precision);
+        printf("n = %d, параметр = %.6f, погрешность = %.2f%%\n", n, current_parameter, current_precision * 100);
 
         // Обновление значений для следующей итерации
         prev_parameter = current_parameter;
@@ -64,6 +66,6 @@ void calculate_with_precision() {
     if (n >= N) {
         printf("Предупреждение: достигнут максимальный размер массива без достижения требуемой точности\n");
     } else {
-        printf("Итоговое значение параметра: %f (точность: %f)\n", current_parameter, current_precision);
+        printf("Итоговое значение параметра: %.6f (точность: %.2f%%)\n", current_parameter, current_precision * 100);
     }
 }

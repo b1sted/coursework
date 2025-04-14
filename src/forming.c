@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include "forming.h"
 
 // Функция формирования массива времени
