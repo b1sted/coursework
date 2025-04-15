@@ -1,8 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/b1sted/coursework/refs/heads/main/.github/assets/logo.png" width="160" alt="signal analysis">
-  <br>
-    signal_analysis
-  <br>
+  <img src="https://github.com/b1sted/coursework/blob/dev/.github/assets/logo.png" width="160" alt="signal analysis">
 </p>
 
 <p align="center">
@@ -31,7 +28,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/b1sted/coursework/blob/main/.github/assets/screenshot.png?raw=true" width="700" />
+  <img src="https://github.com/b1sted/coursework/blob/dev/.github/assets/screenshot.png" width="700" />
 </p>
 
 <p align="center">
