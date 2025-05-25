@@ -21,8 +21,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include <stdio.h>
-
 #include "forming.h"
 
 // Функция формирования массива времени
