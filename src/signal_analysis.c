@@ -23,7 +23,6 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include <math.h>
 
 #include "input.h"
 #include "output.h"
@@ -37,6 +36,8 @@ int main() {
     float t[N], Uvx[N], Uvix[N], dt;
     int n, choice;
     bool continueProgram = true;
+
+    FILE *f1, *f2, *f3;
 
     print_banner();
 
@@ -79,8 +80,6 @@ int main() {
             calculate_with_precision();
             break;
         case 3:
-            FILE *f1, *f2, *f3;
-
             // Открываем файлы для записи
             open_output_files(&f1, &f2, &f3);
 

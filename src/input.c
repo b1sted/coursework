@@ -23,7 +23,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdbool.h>
 
 #include "input.h"
@@ -49,13 +48,6 @@ int input_n() {
     return value;
 }
 
-// Функция для преобразования строки к нижнему регистру
-void to_lower_str(char *str) {
-    for (int i = 0; str[i]; i++) {
-        str[i] = tolower((unsigned char)str[i]);
-    }
-}
-
 // Функция для запроса пользователя на продолжение работы
 bool ask_user_continue(void) {
     char input[INPUT_SIZE];
@@ -73,13 +65,9 @@ bool ask_user_continue(void) {
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
 
-        // Преобразуем строку в нижний регистр для корректного сравнения
-        to_lower_str(input);
-
-        // Сравниваем введённое значение с допустимым
-        if (strcmp(input, "да") == 0) {
+        if ((strcmp(input, "да") == 0) || (strcmp(input, "ДА") == 0)) {
             return true;
-        } else if (strcmp(input, "нет") == 0) {
+        } else if ((strcmp(input, "нет") == 0) || (strcmp(input, "НЕТ") == 0)) {
             return false;
         } else {
             printf("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'.\n");
