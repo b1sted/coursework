@@ -12,8 +12,8 @@
     src="https://img.shields.io/badge/features-comprehensive-brightgreen"
     alt="Features"
   /></a>
-  <a href="#installation--building"><img
-    src="https://img.shields.io/badge/build-makefile-blue"
+  <a href="https://github.com/b1sted/coursework/actions"><img
+    src="https://github.com/b1sted/coursework/workflows/build/badge.svg"
     alt="Build"
   /></a>
   <a href="#prerequisites"><img
