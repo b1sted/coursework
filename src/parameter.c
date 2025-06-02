@@ -41,7 +41,7 @@ float calc_leading_edge(int n, float *U, float dt) {
     float U1 = Umin + 0.9 * (Umax - Umin);
     float U2 = Umin + 0.1 * (Umax - Umin);
 
-    // Считаем длительность заднего фронта
+    // Считаем длительность переднего фронта
     float duration = 0;
     for (int i = 0; i < n - 1; i++) {
         if (U[i] < U1 && U[i] > U2 && U[i + 1] > U[i]) duration += dt;
@@ -58,7 +58,7 @@ void calculate_with_precision() {
 
     float current_parameter, t[ARRAY_SIZE], Uvx[ARRAY_SIZE], Uvix[ARRAY_SIZE], dt;
 
-    printf("\nЗаданный параметр: расчет длительности заднего фронта для Uвых\n");
+    printf("\nЗаданный параметр: расчет длительности переднего фронта для Uвых\n");
 
     while (current_precision > EPSILON) {
         // Формирование массивов
