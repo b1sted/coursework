@@ -26,8 +26,7 @@
 
 #include "parameter.h"
 #include "forming.h"
-
-#define N 1500
+#include "constants.h"
 
 // Функция расчета длительности переднего фронта импульса
 float calc_leading_edge(int n, float *U, float dt) {
@@ -53,29 +52,26 @@ float calc_leading_edge(int n, float *U, float dt) {
 
 // Функция расчета параметра с заданной точностью
 void calculate_with_precision() {
-    float epsilon = 0.01; // Требуемая точность (1%)
-    float current_precision = 1.0; // Текущая погрешность
-    float prev_parameter = 1e10; // Начальное (очень большое) значение 
-    int n = 11; // Начальное количество точек
+    float current_precision = INITIAL_CURRENT_PRECISION; // Текущая погрешность
+    float prev_parameter = PREV_PARAMETER_INITIAL; // Начальное (очень большое) значение 
+    int n = INITIAL_POINTS; // Начальное количество точек
 
-    float current_parameter, t[N], Uvx[N], Uvix[N], dt;
+    float current_parameter, t[ARRAY_SIZE], Uvx[ARRAY_SIZE], Uvix[ARRAY_SIZE], dt;
 
     printf("\nЗаданный параметр: расчет длительности заднего фронта для Uвых\n");
 
-    while (current_precision > epsilon) {
+    while (current_precision > EPSILON) {
         // Формирование массивов
         forming_time(n, t, &dt);
         
-        float t1 = 10, t2 = 15, t3 = 45, a = 20, b = 0.5, c = 17;
-        forming_Uvx(n, t, Uvx, t1, t2, t3, a, b, c);
-        float Uvx1 = 20, d = 2, e = -5;
-        forming_Uvix(n, Uvx, Uvix, Uvx1, d, e);
+        forming_Uvx(n, t, Uvx);
+        forming_Uvix(n, Uvx, Uvix);
 
         // Расчет параметра
         current_parameter = calc_leading_edge(n, Uvix, dt);
 
         // Расчет погрешности
-        if (prev_parameter != 1e10) {
+        if (prev_parameter != PREV_PARAMETER_INITIAL) {
             current_precision = fabs(prev_parameter - current_parameter) / current_parameter;
         }
 
@@ -86,7 +82,7 @@ void calculate_with_precision() {
         n *= 2;
     }
 
-    if (n >= N) {
+    if (n >= ARRAY_SIZE) {
         printf("Предупреждение: достигнут максимальный размер массива без достижения требуемой точности\n");
     } else {
         printf("Итоговое значение параметра: %.6f (точность: %.2f%%)\n", current_parameter, current_precision * 100);

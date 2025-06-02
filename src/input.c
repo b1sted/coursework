@@ -26,8 +26,7 @@
 #include <stdbool.h>
 
 #include "input.h"
-
-#define INPUT_SIZE 10
+#include "constants.h"
 
 // Функция для ввода n
 int input_n() {
@@ -55,7 +54,7 @@ bool ask_user_continue(void) {
     while (1) {
         printf("Хотите продолжить? (да/нет): ");
 
-        // Считываем строку ввода с ограничением
+        // Считываем строку ввода с ограничением. "%9s" для INPUT_SIZE == 10 (оставляет место для '\0')
         if (scanf("%9s", input) != 1) {
             while (getchar() != '\n'); // Если произошла ошибка ввода, очищаем буфер
             continue;

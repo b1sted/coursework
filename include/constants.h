@@ -21,11 +21,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef FORMING_H
-#define FORMING_H
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
-void forming_time(int n, float *t, float *dt);
-void forming_Uvx(int n, float *t, float *Uvx);
-void forming_Uvix(int n, float *Uvx, float *Uvix);
+// Для input.c
+#define INPUT_SIZE 10
 
-#endif // FORMING_H
+// Для parameter.c и signal_analysis.c
+#define ARRAY_SIZE 1500
+
+// Для parameter.c
+#define EPSILON 0.01f
+#define INITIAL_CURRENT_PRECISION 1.0f
+#define PREV_PARAMETER_INITIAL 1e10f
+#define INITIAL_POINTS 11
+
+// Параметры для функции forming_Uvx (используются в forming.c)
+#define T1_PARAM 10.0f
+#define T2_PARAM 15.0f
+#define T3_PARAM 45.0f
+#define A_PARAM 20.0f
+#define B_PARAM 0.5f
+#define C_PARAM 17.0f
+
+// Параметры для функции forming_Uvix (используются в forming.c)
+#define UVX1_PARAM 20.0f
+#define D_PARAM 2.0f
+#define E_PARAM -5.0f
+
+// Параметры для функции forming_time (используются в forming.c)
+#define TN_PARAM 5.0f
+#define TK_PARAM 50.0f
+
+// Пути к файлам
+#define FILE_PATH_ARRAY_T "data/array_t.txt"
+#define FILE_PATH_ARRAY_UVX "data/array_Uvx.txt"
+#define FILE_PATH_ARRAY_UVIX "data/array_Uvix.txt"
+#define FILE_PATH_ZAST "data/zast.txt"
+
+#endif // CONSTANTS_H

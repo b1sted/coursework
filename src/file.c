@@ -25,13 +25,14 @@
 #include <stdlib.h>
 
 #include "file.h"
+#include "constants.h"
 
 // Функция для открытия файлов для последующей записи в них информации
 void open_output_files(FILE **f1, FILE **f2, FILE **f3) {
-    *f1 = fopen("data/array_t.txt", "w");
-    *f2 = fopen("data/array_Uvx.txt", "w");
-    *f3 = fopen("data/array_Uvix.txt", "w");
-
+    *f1 = fopen(FILE_PATH_ARRAY_T, "w");
+    *f2 = fopen(FILE_PATH_ARRAY_UVX, "w");
+    *f3 = fopen(FILE_PATH_ARRAY_UVIX, "w");
+    
     // Проверка успешности открытия файлов
     if (*f1 == NULL || *f2 == NULL || *f3 == NULL) {
         perror("Ошибка при открытии файлов");

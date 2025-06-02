@@ -29,11 +29,10 @@
 #include "file.h"
 #include "forming.h"
 #include "parameter.h"
-
-#define N 1500
+#include "constants.h"
 
 int main() {
-    float t[N], Uvx[N], Uvix[N], dt;
+    float t[ARRAY_SIZE], Uvx[ARRAY_SIZE], Uvix[ARRAY_SIZE], dt;
     int n, choice;
     bool continueProgram = true;
 
@@ -65,18 +64,21 @@ int main() {
         case 1:
             n = input_n();
 
+            // Формирование массива времени t и расчет шага dt
             forming_time(n, t, &dt);
 
-            float t1 = 10, t2 = 15, t3 = 45, a = 20, b = 0.5, c = 17;
-            forming_Uvx(n, t, Uvx, t1, t2, t3, a, b, c);
+            // Формирование массива входного напряжения Uvx
+            forming_Uvx(n, t, Uvx);
 
-            float Uvx1 = 20, d = 2, e = -5;
-            forming_Uvix(n, Uvx, Uvix, Uvx1, d, e);
+            // Формирование массива выходного напряжения Uvix по Uvx
+            forming_Uvix(n, Uvx, Uvix);
 
+            // Вывод сформированных данных в виде таблицы
             forming_table(n, t, Uvx, Uvix);
 
             break;
         case 2:
+            // Расчет параметра (длительности переднего фронта) с заданной точностью
             calculate_with_precision();
             break;
         case 3:

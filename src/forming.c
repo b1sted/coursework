@@ -22,39 +22,38 @@
  */
 
 #include "forming.h"
+#include "constants.h"
 
 // Функция формирования массива времени
 void forming_time(int n, float *t, float *dt) {
-    float tn = 5, tk = 50;
-
-    *dt = (tk - tn) / (n - 1);
+    *dt = (TK_PARAM - TN_PARAM) / (n - 1);
     for (int i = 0; i < n; i++) {
-        t[i] = tn + i * (*dt);
+        t[i] = TN_PARAM + i * (*dt);
     }
 }
 
 // Функция формирования массива Uvx
-void forming_Uvx(int n, float *t, float *Uvx, float t1, float t2, float t3, float a, float b, float c) {
+void forming_Uvx(int n, float *t, float *Uvx) {
     for (int i = 0; i < n; i++) {
-        if (t[i] <= t1) {
+        if (t[i] <= T1_PARAM) {
             Uvx[i] = 0;
-        } else if (t1 < t[i] && t[i] <= t2) {
-            Uvx[i] = a * (t[i] - t1);
-        } else if (t2 < t[i] && t[i] <= t3) {
-            Uvx[i] = a * (t2 - t1) - b * (t[i] - t2);
+        } else if (T1_PARAM < t[i] && t[i] <= T2_PARAM) {
+            Uvx[i] = A_PARAM * (t[i] - T1_PARAM);
+        } else if (T2_PARAM < t[i] && t[i] <= T3_PARAM) {
+            Uvx[i] = A_PARAM * (T2_PARAM - T1_PARAM) - B_PARAM * (t[i] - T2_PARAM);
         } else {
-            Uvx[i] = a * (t2 - t1) - b * (t3 - t1) - c * (t[i] - t3);
+            Uvx[i] = A_PARAM * (T2_PARAM - T1_PARAM) - B_PARAM * (T3_PARAM - T1_PARAM) - C_PARAM * (t[i] - T3_PARAM);
         }
     }
 }
 
 // Функция формирования массива Uvix
-void forming_Uvix(int n, float *Uvx, float *Uvix, float Uvx1, float a, float b) {
+void forming_Uvix(int n, float *Uvx, float *Uvix) {
     for (int i = 0; i < n; i++) {
-        if (Uvx[i] <= Uvx1) {
-            Uvix[i] = a * Uvx[i] + b;
+        if (Uvx[i] <= UVX1_PARAM) {
+            Uvix[i] = D_PARAM * Uvx[i] + E_PARAM;
         } else {
-            Uvix[i] = a * Uvx1 + b;
+            Uvix[i] = D_PARAM * UVX1_PARAM + E_PARAM;
         }
     }
 }
