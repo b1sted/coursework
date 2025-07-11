@@ -22,7 +22,23 @@
  */
 
 #include "forming.h"
-#include "constants.h"
+
+// Параметры для функции forming_time
+static const float TN_PARAM = 5.0f;
+static const float TK_PARAM = 50.0f;
+
+// Параметры для функции forming_Uvx
+static const float T1_PARAM = 10.0f;
+static const float T2_PARAM = 15.0f;
+static const float T3_PARAM = 45.0f;
+static const float A_PARAM  = 20.0f;
+static const float B_PARAM  = 0.5f;
+static const float C_PARAM  = 17.0f;
+
+// Параметры для функции forming_Uvix
+static const float UVX1_PARAM = 20.0f;
+static const float D_PARAM    = 2.0f;
+static const float E_PARAM    = -5.0f;
 
 // Функция формирования массива времени
 void forming_time(int n, float *t, float *dt) {

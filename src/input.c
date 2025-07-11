@@ -29,6 +29,9 @@
 #include "constants.h"
 #include "response_dictionary.h"
 
+// Размер буфера для чтения строкового ввода от пользователя ("да"/"нет"). С запасом для '\0'.
+static const int INPUT_SIZE = 10;
+
 // Функция для ввода n
 int input_n() {
     int value;

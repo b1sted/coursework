@@ -28,6 +28,18 @@
 #include "forming.h"
 #include "constants.h"
 
+// Требуемая относительная погрешность (1% в соотв. с README), при достижении которой расчет останавливается.
+static const float EPSILON = 0.01f;
+
+// Начальная погрешность для входа в цикл while. Просто значение > EPSILON.
+static const float INITIAL_CURRENT_PRECISION = 1.0f;
+
+// Стартовое значение для 'prev_parameter', чтобы избежать ложной точности на первой итерации.
+static const float PREV_PARAMETER_INITIAL = 1e10f;
+
+// Начальное количество точек 'n' для первого шага итерационного расчета.
+static const int INITIAL_POINTS = 11;
+
 // Функция расчета длительности переднего фронта импульса
 float calc_leading_edge(int n, float *U, float dt) {
     // Находим максимальное и минимальное значения
