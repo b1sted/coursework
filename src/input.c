@@ -27,6 +27,7 @@
 
 #include "input.h"
 #include "constants.h"
+#include "response_dictionary.h"
 
 // Функция для ввода n
 int input_n() {
@@ -64,12 +65,18 @@ bool ask_user_continue(void) {
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
 
-        if ((strcmp(input, "да") == 0) || (strcmp(input, "ДА") == 0)) {
-            return true;
-        } else if ((strcmp(input, "нет") == 0) || (strcmp(input, "НЕТ") == 0)) {
-            return false;
-        } else {
-            printf("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'.\n");
+        ResponseType result = get_response_type_by_keyword(input);
+
+        switch (result) {
+            case RESPONSE_AFFIRMATIVE:
+                return true;
+                break;
+            case RESPONSE_NEGATIVE:
+                return false;
+                break;
+            case RESPONSE_UNKNOWN:
+                printf("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'.\n");
+                break;
         }
     }
 
