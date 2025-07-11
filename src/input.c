@@ -26,8 +26,11 @@
 #include <stdbool.h>
 
 #include "input.h"
+#include "constants.h"
+#include "response_dictionary.h"
 
-#define INPUT_SIZE 10
+// Размер буфера для чтения строкового ввода от пользователя ("да"/"нет"). С запасом для '\0'.
+static const int INPUT_SIZE = 10;
 
 // Функция для ввода n
 int input_n() {
@@ -55,7 +58,7 @@ bool ask_user_continue(void) {
     while (1) {
         printf("Хотите продолжить? (да/нет): ");
 
-        // Считываем строку ввода с ограничением
+        // Считываем строку ввода с ограничением. "%9s" для INPUT_SIZE == 10 (оставляет место для '\0')
         if (scanf("%9s", input) != 1) {
             while (getchar() != '\n'); // Если произошла ошибка ввода, очищаем буфер
             continue;
@@ -65,12 +68,18 @@ bool ask_user_continue(void) {
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
 
-        if ((strcmp(input, "да") == 0) || (strcmp(input, "ДА") == 0)) {
-            return true;
-        } else if ((strcmp(input, "нет") == 0) || (strcmp(input, "НЕТ") == 0)) {
-            return false;
-        } else {
-            printf("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'.\n");
+        ResponseType result = get_response_type_by_keyword(input);
+
+        switch (result) {
+            case RESPONSE_AFFIRMATIVE:
+                return true;
+                break;
+            case RESPONSE_NEGATIVE:
+                return false;
+                break;
+            case RESPONSE_UNKNOWN:
+                printf("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'.\n");
+                break;
         }
     }
 

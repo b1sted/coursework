@@ -21,40 +21,23 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef RESPONSE_DICTIONARY_H
+#define RESPONSE_DICTIONARY_H
 
-#include "file.h"
-#include "constants.h"
+typedef enum {
+    RESPONSE_UNKNOWN,
+    RESPONSE_AFFIRMATIVE,
+    RESPONSE_NEGATIVE
+} ResponseType;
 
-// Функция для открытия файлов для последующей записи в них информации
-void open_output_files(FILE **f1, FILE **f2, FILE **f3) {
-    *f1 = fopen(FILE_PATH_ARRAY_T, "w");
-    *f2 = fopen(FILE_PATH_ARRAY_UVX, "w");
-    *f3 = fopen(FILE_PATH_ARRAY_UVIX, "w");
-    
-    // Проверка успешности открытия файлов
-    if (*f1 == NULL || *f2 == NULL || *f3 == NULL) {
-        perror("Ошибка при открытии файлов");
-        exit(1); // Завершение программы в случае ошибки
-    }
-}
+typedef struct {
+    const char *keyword_text;
+    ResponseType type;
+} KeywordMapping;
 
-// Функция для закрытия файлов
-void close_output_files(FILE *f1, FILE *f2, FILE *f3) {
-    if (f1) fclose(f1);
-    if (f2) fclose(f2);
-    if (f3) fclose(f3);
-}
+extern const KeywordMapping RESPONSE_DICTIONARY[];
+extern const int DICTIONARY_SIZE;
 
-// Функция для нахождения размера файлов
-long get_file_size(FILE *f) {
-    if (fseek(f, 0, SEEK_END) != 0) {
-        perror("Ошибка при fseek");
-        return 1;
-    }
+ResponseType get_response_type_by_keyword(const char* input);
 
-    long size_f = ftell(f);
-    if (size_f < 0) perror("Ошибка при ftell");
-    return size_f;
-}
+#endif // RESPONSE_DICTIONARY_H

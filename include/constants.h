@@ -21,11 +21,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef FORMING_H
-#define FORMING_H
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
-void forming_time(int n, float *t, float *dt);
-void forming_Uvx(int n, float *t, float *Uvx);
-void forming_Uvix(int n, float *Uvx, float *Uvix);
+// Максимальный размер массивов для данных.
+// Используется в main для выделения памяти и в других модулях для проверки границ.
+#define ARRAY_SIZE 1500
 
-#endif // FORMING_H
+// Пути к внешним файлам данных
+#define FILE_PATH_ARRAY_T "data/array_t.txt"
+#define FILE_PATH_ARRAY_UVX "data/array_Uvx.txt"
+#define FILE_PATH_ARRAY_UVIX "data/array_Uvix.txt"
+#define FILE_PATH_ZAST "data/zast.txt"
+
+#endif // CONSTANTS_H

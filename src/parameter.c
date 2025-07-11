@@ -26,8 +26,19 @@
 
 #include "parameter.h"
 #include "forming.h"
+#include "constants.h"
 
-#define N 1500
+// Требуемая относительная погрешность (1% в соотв. с README), при достижении которой расчет останавливается.
+static const float EPSILON = 0.01f;
+
+// Начальная погрешность для входа в цикл while. Просто значение > EPSILON.
+static const float INITIAL_CURRENT_PRECISION = 1.0f;
+
+// Стартовое значение для 'prev_parameter', чтобы избежать ложной точности на первой итерации.
+static const float PREV_PARAMETER_INITIAL = 1e10f;
+
+// Начальное количество точек 'n' для первого шага итерационного расчета.
+static const int INITIAL_POINTS = 11;
 
 // Функция расчета длительности переднего фронта импульса
 float calc_leading_edge(int n, float *U, float dt) {
@@ -42,7 +53,7 @@ float calc_leading_edge(int n, float *U, float dt) {
     float U1 = Umin + 0.9 * (Umax - Umin);
     float U2 = Umin + 0.1 * (Umax - Umin);
 
-    // Считаем длительность заднего фронта
+    // Считаем длительность переднего фронта
     float duration = 0;
     for (int i = 0; i < n - 1; i++) {
         if (U[i] < U1 && U[i] > U2 && U[i + 1] > U[i]) duration += dt;
@@ -53,29 +64,26 @@ float calc_leading_edge(int n, float *U, float dt) {
 
 // Функция расчета параметра с заданной точностью
 void calculate_with_precision() {
-    float epsilon = 0.01; // Требуемая точность (1%)
-    float current_precision = 1.0; // Текущая погрешность
-    float prev_parameter = 1e10; // Начальное (очень большое) значение 
-    int n = 11; // Начальное количество точек
+    float current_precision = INITIAL_CURRENT_PRECISION; // Текущая погрешность
+    float prev_parameter = PREV_PARAMETER_INITIAL; // Начальное (очень большое) значение 
+    int n = INITIAL_POINTS; // Начальное количество точек
 
-    float current_parameter, t[N], Uvx[N], Uvix[N], dt;
+    float current_parameter, t[ARRAY_SIZE], Uvx[ARRAY_SIZE], Uvix[ARRAY_SIZE], dt;
 
-    printf("\nЗаданный параметр: расчет длительности заднего фронта для Uвых\n");
+    printf("\nЗаданный параметр: расчет длительности переднего фронта для Uвых\n");
 
-    while (current_precision > epsilon) {
+    while (current_precision > EPSILON) {
         // Формирование массивов
         forming_time(n, t, &dt);
         
-        float t1 = 10, t2 = 15, t3 = 45, a = 20, b = 0.5, c = 17;
-        forming_Uvx(n, t, Uvx, t1, t2, t3, a, b, c);
-        float Uvx1 = 20, d = 2, e = -5;
-        forming_Uvix(n, Uvx, Uvix, Uvx1, d, e);
+        forming_Uvx(n, t, Uvx);
+        forming_Uvix(n, Uvx, Uvix);
 
         // Расчет параметра
         current_parameter = calc_leading_edge(n, Uvix, dt);
 
         // Расчет погрешности
-        if (prev_parameter != 1e10) {
+        if (prev_parameter != PREV_PARAMETER_INITIAL) {
             current_precision = fabs(prev_parameter - current_parameter) / current_parameter;
         }
 
@@ -86,7 +94,7 @@ void calculate_with_precision() {
         n *= 2;
     }
 
-    if (n >= N) {
+    if (n >= ARRAY_SIZE) {
         printf("Предупреждение: достигнут максимальный размер массива без достижения требуемой точности\n");
     } else {
         printf("Итоговое значение параметра: %.6f (точность: %.2f%%)\n", current_parameter, current_precision * 100);

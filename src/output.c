@@ -25,10 +25,11 @@
 
 #include "output.h"
 #include "file.h"
+#include "constants.h"
 
 // Функция вывода заставки из файла
 void print_banner() {
-    FILE *fp = fopen("data/zast.txt", "r");
+    FILE *fp = fopen(FILE_PATH_ZAST, "r");
     
     if (!fp) {
         perror("Не удалось открыть файл заставки");

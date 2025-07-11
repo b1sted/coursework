@@ -21,40 +21,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
-#include "file.h"
-#include "constants.h"
+#include "response_dictionary.h"
 
-// Функция для открытия файлов для последующей записи в них информации
-void open_output_files(FILE **f1, FILE **f2, FILE **f3) {
-    *f1 = fopen(FILE_PATH_ARRAY_T, "w");
-    *f2 = fopen(FILE_PATH_ARRAY_UVX, "w");
-    *f3 = fopen(FILE_PATH_ARRAY_UVIX, "w");
-    
-    // Проверка успешности открытия файлов
-    if (*f1 == NULL || *f2 == NULL || *f3 == NULL) {
-        perror("Ошибка при открытии файлов");
-        exit(1); // Завершение программы в случае ошибки
+const KeywordMapping RESPONSE_DICTIONARY[] = {
+    // Утвердительные ответы
+    {"да",   RESPONSE_AFFIRMATIVE},
+    {"Да",   RESPONSE_AFFIRMATIVE},
+    {"дА",   RESPONSE_AFFIRMATIVE},
+    {"ДА",   RESPONSE_AFFIRMATIVE},
+
+    // Отрицательные ответы
+    {"нет",  RESPONSE_NEGATIVE},
+    {"Нет",  RESPONSE_NEGATIVE},
+    {"нЕт",  RESPONSE_NEGATIVE},
+    {"неТ",  RESPONSE_NEGATIVE},
+    {"НЕт",  RESPONSE_NEGATIVE},
+    {"нЕТ",  RESPONSE_NEGATIVE},
+    {"НЕТ",  RESPONSE_NEGATIVE}
+};
+
+const int DICTIONARY_SIZE = sizeof(RESPONSE_DICTIONARY) / sizeof(RESPONSE_DICTIONARY[0]);
+
+ResponseType get_response_type_by_keyword(const char *input) {
+    for (int i = 0; i < DICTIONARY_SIZE; i++) {
+        if (strcmp(input, RESPONSE_DICTIONARY[i].keyword_text) == 0) {
+            return RESPONSE_DICTIONARY[i].type;
+        }
     }
-}
-
-// Функция для закрытия файлов
-void close_output_files(FILE *f1, FILE *f2, FILE *f3) {
-    if (f1) fclose(f1);
-    if (f2) fclose(f2);
-    if (f3) fclose(f3);
-}
-
-// Функция для нахождения размера файлов
-long get_file_size(FILE *f) {
-    if (fseek(f, 0, SEEK_END) != 0) {
-        perror("Ошибка при fseek");
-        return 1;
-    }
-
-    long size_f = ftell(f);
-    if (size_f < 0) perror("Ошибка при ftell");
-    return size_f;
+    return RESPONSE_UNKNOWN;
 }
